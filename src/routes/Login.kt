@@ -11,6 +11,6 @@ fun Route.login() {
 
     post("/login") {
         val loginPayload = call.receive<LoginRequestPayload>()
-        call.respondText(loginPayload.username)
+        call.respondText("Your username is ${loginPayload.username}")
     }
 }
