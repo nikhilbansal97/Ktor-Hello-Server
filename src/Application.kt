@@ -1,6 +1,9 @@
 package com.nikhil
 
+import com.nikhil.models.response.ErrorResponse
 import com.nikhil.routes.login
+import com.nikhil.utils.exceptions.MissingFieldsException
+import com.nikhil.utils.respondBadRequest
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -38,13 +41,20 @@ fun Application.serverModule() {
         gson()
     }
     // Used to handle the error in the server.
-    install(StatusPages) {
-        exception<Throwable> { exception ->
-            call.respondText(exception.localizedMessage, ContentType.Text.Plain, HttpStatusCode.InternalServerError)
-        }
-    }
+    installStatusPagesFeature()
 
     routing {
         login()
+    }
+}
+
+private fun Application.installStatusPagesFeature() {
+    install(StatusPages) {
+        exception<MissingFieldsException> { exception ->
+            call.respondBadRequest(ErrorResponse(exception.localizedMessage))
+        }
+        exception<Throwable> { exception ->
+            call.respondText(exception.localizedMessage, ContentType.Text.Plain, HttpStatusCode.InternalServerError)
+        }
     }
 }
