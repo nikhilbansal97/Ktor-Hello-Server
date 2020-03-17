@@ -1,5 +1,7 @@
 package com.nikhil.utils
 
+import com.nikhil.models.response.ErrorResponse
+import com.nikhil.models.response.SuccessResponse
 import io.ktor.application.ApplicationCall
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
@@ -14,6 +16,14 @@ suspend fun ApplicationCall.respondSuccess(message: Any) {
     respond(HttpStatusCode.OK, message)
 }
 
-suspend fun ApplicationCall.respondBadRequest(message: Any) {
-    respond(HttpStatusCode.BadRequest, message)
+suspend fun ApplicationCall.respondSuccess(message: String) {
+    respond(HttpStatusCode.OK, SuccessResponse(message))
+}
+
+suspend fun ApplicationCall.respondBadRequest(message: String) {
+    respond(HttpStatusCode.BadRequest, ErrorResponse(message))
+}
+
+fun Int?.isNotNullOrZero(): Boolean {
+    return this != null && this != 0
 }

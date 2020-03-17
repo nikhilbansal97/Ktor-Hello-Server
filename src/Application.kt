@@ -1,12 +1,15 @@
 package com.nikhil
 
-import com.nikhil.models.response.ErrorResponse
-import com.nikhil.routes.login
+import com.nikhil.database.DatabaseManager
+import com.nikhil.routes.Login.login
+import com.nikhil.routes.Register.register
 import com.nikhil.utils.exceptions.MissingFieldsException
+import com.nikhil.utils.exceptions.ServerException
 import com.nikhil.utils.respondBadRequest
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
+import io.ktor.application.log
 import io.ktor.features.CallLogging
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
@@ -17,6 +20,7 @@ import io.ktor.response.respondText
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import io.ktor.util.error
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -43,18 +47,24 @@ fun Application.serverModule() {
     // Used to handle the error in the server.
     installStatusPagesFeature()
 
+    val databaseManager = DatabaseManager().apply { init() }
+
     routing {
         login()
+        register(databaseManager)
     }
 }
 
 private fun Application.installStatusPagesFeature() {
     install(StatusPages) {
         exception<MissingFieldsException> { exception ->
-            call.respondBadRequest(ErrorResponse(exception.localizedMessage))
+            call.respondBadRequest(exception.localizedMessage)
         }
+        exception<ServerException> { exception -> log.error(exception) }
         exception<Throwable> { exception ->
-            call.respondText(exception.localizedMessage, ContentType.Text.Plain, HttpStatusCode.InternalServerError)
+            call.respondText(
+                exception.localizedMessage, ContentType.Text.Plain, HttpStatusCode.InternalServerError
+            )
         }
     }
 }

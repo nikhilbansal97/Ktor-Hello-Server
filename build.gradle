@@ -2,7 +2,7 @@ buildscript {
     repositories {
         jcenter()
     }
-    
+
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -35,6 +35,10 @@ dependencies {
 
     // Gson
     implementation "io.ktor:ktor-gson:$ktor_version"
+
+    // MongoDb
+    implementation "org.mongodb:mongodb-driver:3.12.2"
+    implementation 'org.mongodb:bson:4.0.0'
 
     testImplementation "io.ktor:ktor-server-tests:$ktor_version"
 }
