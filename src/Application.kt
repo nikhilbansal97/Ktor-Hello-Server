@@ -3,6 +3,7 @@ package com.nikhil
 import com.nikhil.database.DatabaseManager
 import com.nikhil.routes.Login.login
 import com.nikhil.routes.Register.register
+import com.nikhil.routes.Users.users
 import com.nikhil.utils.exceptions.MissingFieldsException
 import com.nikhil.utils.exceptions.ServerException
 import com.nikhil.utils.respondBadRequest
@@ -52,6 +53,7 @@ fun Application.serverModule() {
     routing {
         login()
         register(databaseManager)
+        users(databaseManager)
     }
 }
 

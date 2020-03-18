@@ -26,6 +26,8 @@ object Register {
             when {
                 registerPayload.username == null -> throw MissingFieldsException("username")
                 registerPayload.password == null -> throw MissingFieldsException("password")
+                registerPayload.firstName == null -> throw MissingFieldsException("firstName")
+                registerPayload.lastName == null -> throw MissingFieldsException("lastName")
                 else -> registerUser(registerPayload)
             }
         }

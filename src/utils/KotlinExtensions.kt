@@ -1,5 +1,7 @@
 package com.nikhil.utils
 
+import com.mongodb.client.MongoCollection
+import com.nikhil.models.database.User
 import com.nikhil.models.response.ErrorResponse
 import com.nikhil.models.response.SuccessResponse
 import io.ktor.application.ApplicationCall
@@ -7,6 +9,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
 import io.ktor.response.respondText
+import org.bson.Document
 
 suspend fun ApplicationCall.respondJson(message: String) {
     respondText(message, ContentType.Application.Json)
@@ -26,4 +29,15 @@ suspend fun ApplicationCall.respondBadRequest(message: String) {
 
 fun Int?.isNotNullOrZero(): Boolean {
     return this != null && this != 0
+}
+
+fun MongoCollection<Document>.toUsersList(): List<User> {
+    return find().map { document ->
+        User(
+            id = document.getObjectId("_id").toHexString(),
+            username = document.getString("username"),
+            firstName = document.getString("firstName"),
+            lastName = document.getString("lastName")
+        )
+    }.toList()
 }
