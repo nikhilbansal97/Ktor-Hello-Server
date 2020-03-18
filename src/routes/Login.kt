@@ -1,6 +1,8 @@
 package com.nikhil.routes
 
 import com.nikhil.models.request.LoginRequestPayload
+import com.nikhil.models.request.LoginRequestPayload.Companion.dbField_password
+import com.nikhil.models.request.LoginRequestPayload.Companion.dbField_username
 import com.nikhil.utils.exceptions.MissingFieldsException
 import com.nikhil.utils.respondSuccess
 import io.ktor.application.call
@@ -14,8 +16,8 @@ object Login {
         post("/login") {
             val loginPayload = call.receive<LoginRequestPayload>()
             when {
-                loginPayload.username == null -> throw MissingFieldsException("username")
-                loginPayload.password == null -> throw MissingFieldsException("password")
+                loginPayload.username == null -> throw MissingFieldsException(dbField_username)
+                loginPayload.password == null -> throw MissingFieldsException(dbField_password)
                 else -> call.respondSuccess("Login Success!")
             }
         }

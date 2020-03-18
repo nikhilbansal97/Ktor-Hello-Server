@@ -8,12 +8,20 @@ data class RegisterRequestPayload(
     val firstName: String?,
     val lastName: String?
 ) {
+
+    companion object {
+        const val dbField_username = "username"
+        const val dbField_password = "password"
+        const val dbField_firstName = "firstName"
+        const val dbField_lastName = "lastName"
+    }
+
     fun toDocument(): Document {
         return Document(mutableMapOf<String, String>().apply {
-            put("username", username ?: "")
-            put("password", password ?: "")
-            put("firstName", firstName ?: "")
-            put("lastName", lastName ?: "")
+            put(dbField_username, username ?: "")
+            put(dbField_password, password ?: "")
+            put(dbField_firstName, firstName ?: "")
+            put(dbField_lastName, lastName ?: "")
         }.toMap())
     }
 }

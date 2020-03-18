@@ -32,12 +32,5 @@ fun Int?.isNotNullOrZero(): Boolean {
 }
 
 fun MongoCollection<Document>.toUsersList(): List<User> {
-    return find().map { document ->
-        User(
-            id = document.getObjectId("_id").toHexString(),
-            username = document.getString("username"),
-            firstName = document.getString("firstName"),
-            lastName = document.getString("lastName")
-        )
-    }.toList()
+    return find().map { User.fromDocument(it) }.toList()
 }
