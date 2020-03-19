@@ -1,7 +1,7 @@
 package com.nikhil.utils
 
 import com.mongodb.client.MongoCollection
-import com.nikhil.models.database.User
+import com.nikhil.database.models.User
 import com.nikhil.models.response.ErrorResponse
 import com.nikhil.models.response.SuccessResponse
 import io.ktor.application.ApplicationCall

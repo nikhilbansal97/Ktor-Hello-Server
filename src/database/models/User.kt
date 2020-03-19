@@ -1,4 +1,4 @@
-package com.nikhil.models.database
+package com.nikhil.database.models
 
 import org.bson.Document
 
