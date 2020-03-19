@@ -5,15 +5,9 @@ import com.nikhil.database.models.User
 import com.nikhil.models.response.ErrorResponse
 import com.nikhil.models.response.SuccessResponse
 import io.ktor.application.ApplicationCall
-import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.response.respond
-import io.ktor.response.respondText
 import org.bson.Document
-
-suspend fun ApplicationCall.respondJson(message: String) {
-    respondText(message, ContentType.Application.Json)
-}
 
 suspend fun ApplicationCall.respondSuccess(message: Any) {
     respond(HttpStatusCode.OK, message)

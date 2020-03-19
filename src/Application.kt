@@ -1,8 +1,10 @@
 package com.nikhil
 
 import com.nikhil.database.DatabaseManager
+import com.nikhil.features.SessionFeature.installSessionFeature
 import com.nikhil.features.StatusPagesFeature.installStatusPagesFeature
 import com.nikhil.routes.Login.login
+import com.nikhil.routes.Logout.logout
 import com.nikhil.routes.Register.register
 import com.nikhil.routes.Users.users
 import io.ktor.application.Application
@@ -38,12 +40,16 @@ fun Application.serverModule() {
     }
     // Used to handle the error in the server.
     installStatusPagesFeature()
+    // Maintain sessions
+    installSessionFeature()
 
     val databaseManager = DatabaseManager().apply { init() }
 
     routing {
         login()
+        logout()
         register(databaseManager)
+
         users(databaseManager)
     }
 }
