@@ -2,6 +2,12 @@
 
 Simple project to showcase how to use some basic features and define routes. It is hooked to a MongoDb Database to save the users information.
 
+## Features uses
+1. [Call Logging](https://ktor.io/servers/features/call-logging.html)
+2. [Content Negotiation](https://ktor.io/servers/features/content-negotiation.html)
+3. [Status Pages](https://ktor.io/servers/features/status-pages.html)
+4. [Sessions](https://ktor.io/servers/features/sessions.html)
+
 ## Routes
 1. POST `/register`
   
