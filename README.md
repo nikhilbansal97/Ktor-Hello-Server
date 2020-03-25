@@ -9,8 +9,8 @@ Simple project to showcase how to use some basic features and define routes. It 
 4. [Sessions](https://ktor.io/servers/features/sessions.html)
 
 ## Upcoming
-1. JWT Authentication
-2. WebSockets
+1. [JWT Authentication](https://ktor.io/servers/features/authentication/jwt.html)
+2. [WebSockets](https://ktor.io/servers/raw-sockets.html)
 
 ## Routes
 1. POST `/register`
